@@ -3,14 +3,11 @@ import { Button } from "antd";
 import { Route, Routes } from "react-router";
 import "./App.css";
 import Cliente from "./componentes/Cliente/Cliente";
-import LayoutBase from "./componentes/layout/LayoutBase";
+import LayoutBase from "./componentes/Layout/LayoutBase";
 import { getItem } from "./componentes/Util/LayoutUtils";
 
 function App() {
-  const menus = [
-    getItem("Home", "/", <DesktopOutlined />),
-    getItem("Clientes", "/clientes", <UserOutlined />),
-  ];
+  const menus = [getItem("Home", "/", <DesktopOutlined />), getItem("Clientes", "/clientes", <UserOutlined />)];
 
   return (
     <>

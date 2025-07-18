@@ -1,6 +1,7 @@
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { BreadcrumbCustom } from "./BreadcrumbCustom";
 const { Header, Content, Footer, Sider } = Layout;
 
 const LayoutBase = ({ items, children }) => {
@@ -25,7 +26,7 @@ const LayoutBase = ({ items, children }) => {
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }} />
         <Content style={{ margin: "0 16px" }}>
-          <Breadcrumb style={{ margin: "16px 0" }} items={[{ title: "User" }, { title: "Bill" }]} />
+          <BreadcrumbCustom />
           <div
             style={{
               padding: 24,
