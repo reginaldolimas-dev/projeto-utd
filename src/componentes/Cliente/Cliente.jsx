@@ -1,4 +1,4 @@
-import { Card, Col, Collapse, Row, Typography } from "antd";
+import { Button, Card, Col, Collapse, Row, Typography } from "antd";
 import Formulario from "../Formulario/Formulario";
 import Tabela from "../Tabela/Tabela";
 
@@ -16,7 +16,7 @@ const Cliente = () => {
 
   return (
     <>
-      <Card title={<Title level={3}>Pesquisa Clientes</Title>}>
+      <Card title={<Title level={3}>PESQUISA DE CLIENTES</Title>} extra={<Button type="primary">Cadastrar</Button>}>
         <Collapse defaultActiveKey={"0"}>
           <Collapse.Panel header={"Filtros"} key={"0"}>
             <Row gutter={[32, 32]}>
