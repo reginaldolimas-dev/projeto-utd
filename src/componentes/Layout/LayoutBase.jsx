@@ -1,5 +1,5 @@
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Layout, Menu, theme } from "antd";
+import Icon, { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { Alert, Button, Layout, Menu, theme } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { BreadcrumbCustom } from "./BreadcrumbCustom";
@@ -35,6 +35,24 @@ const LayoutBase = ({ items, children }) => {
               width: 64,
               height: 64,
             }}
+          />
+          <Alert
+            style={{ padding: "2px" }}
+            message={
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                }}
+              >
+                <h4 className="vibrarHorizontal" style={{ color: "#f5222d", fontSize: "1rem", margin: 0 }}>
+                  <Icon type="GrSystem" library="gr" /> {`DESENVOLVIMENTO DE INTERFACES WEB COM JAVASCRIPT`}{" "}
+                  <Icon type="GrSystem" library="gr" />
+                </h4>
+              </div>
+            }
+            type="error"
           />
         </Header>
         <Content style={{ margin: "0 16px" }}>
