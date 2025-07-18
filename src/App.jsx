@@ -1,7 +1,6 @@
 import { DesktopOutlined, UserOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { Route, Routes } from "react-router";
-import "./App.css";
 import Cliente from "./componentes/Cliente/Cliente";
 import LayoutBase from "./componentes/Layout/LayoutBase";
 import { getItem } from "./componentes/Util/LayoutUtils";
