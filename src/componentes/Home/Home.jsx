@@ -11,7 +11,7 @@ export function Home() {
           status="warning"
           title={"Projeto Final UTD - 28/04/2025 à 24/07/2025 Ead"}
           subTitle={
-            <div style={{ textAlign: "left" }}>
+            <div style={{ textAlign: "left", fontSize: "18px" }}>
               <div>
                 <strong>📦 Backend:</strong> Node.js, Express, Sequelize, MySQL
               </div>
