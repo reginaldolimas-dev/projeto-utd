@@ -1,10 +1,12 @@
 import { Button, Card, Col, Collapse, Row, Typography } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { buscarClientes } from "../Api/rotas-cliente";
 import Formulario from "../Formulario/Formulario";
 import Tabela from "../Tabela/Tabela";
 
 const Cliente = () => {
+  const [clientes, definirClientes] = useState([]);
+
   const { Title } = Typography;
 
   useEffect(() => {
@@ -13,9 +15,9 @@ const Cliente = () => {
 
   async function buscarTodosClientes() {
     const resposta = await buscarClientes();
-    console.log("🚀 ~ buscarTodosClientes ~ resposta:", resposta);
-
-    return resposta.data;
+    if (resposta?.request?.status === 200) {
+      definirClientes(resposta.data);
+    }
   }
 
   const campos = [{ name: "nome", label: "Nome" }];
@@ -24,7 +26,20 @@ const Cliente = () => {
     { title: "Nome", dataIndex: "nome", key: "nome" },
     { title: "Idade", dataIndex: "idade", key: "idade" },
     { title: "Email", dataIndex: "email", key: "email" },
-    { title: "Ações", dataIndex: "acoes", key: "acoes" },
+    {
+      title: "Ações",
+      key: "acoes",
+      render: (registro) => (
+        <>
+          <Button type="primary" onClick={() => console.log(registro)}>
+            Editar
+          </Button>
+          <Button type="primary" danger style={{ marginLeft: 8 }} onClick={() => console.log(registro)}>
+            Excluir
+          </Button>
+        </>
+      ),
+    },
   ];
 
   return (
@@ -41,7 +56,7 @@ const Cliente = () => {
         </Collapse>
         <Row style={{ marginTop: 24 }}>
           <Col span={24}>
-            <Tabela colunas={colunas} />
+            <Tabela dados={clientes} colunas={colunas} />
           </Col>
         </Row>
       </Card>
