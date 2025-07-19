@@ -20,6 +20,19 @@ const Cliente = () => {
     }
   }
 
+  const aoEnviar = (valores) => {
+    if (valores?.nome) {
+      definirClientes((prevClientes) =>
+        prevClientes.filter((cliente) => cliente.nome.toLowerCase().includes(valores.nome.toLowerCase()))
+      );
+    }
+    return;
+  };
+
+  const aoRedefinir = () => {
+    buscarTodosClientes();
+  };
+
   const campos = [{ name: "nome", label: "Nome" }];
 
   const colunas = [
@@ -49,7 +62,7 @@ const Cliente = () => {
           <Collapse.Panel header={"Filtros"} key={"0"}>
             <Row gutter={[32, 32]}>
               <Col span={24}>
-                <Formulario campos={campos} />
+                <Formulario aoRedefinir={aoRedefinir} aoEnviar={aoEnviar} campos={campos} />
               </Col>
             </Row>
           </Collapse.Panel>
