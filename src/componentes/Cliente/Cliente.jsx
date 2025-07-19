@@ -1,6 +1,6 @@
 import { Button, Card, Col, Collapse, Row, Typography } from "antd";
 import { useEffect, useState } from "react";
-import { buscarClientes } from "../Api/rotas-cliente";
+import { buscarClientes, salvarCliente } from "../Api/rotas-cliente";
 import Formulario from "../Formulario/Formulario";
 import Tabela from "../Tabela/Tabela";
 import ClienteModal from "./componente/ClienteModal";
@@ -20,6 +20,17 @@ const Cliente = () => {
     if (resposta?.request?.status === 200) {
       definirClientes(resposta.data);
     }
+  }
+
+  async function aoSalvarCliente(parametros) {
+    const resposta = await salvarCliente(parametros);
+    if (resposta?.request?.status === 200) {
+      Notification.success({
+        message: "Cliente salvo com sucesso!",
+      });
+    }
+    await buscarTodosClientes();
+    fecharModal();
   }
 
   const abrirModal = () => {
@@ -65,9 +76,9 @@ const Cliente = () => {
   ];
 
   const CAMPOS = [
-    { name: "nome", label: "Nome", span: 24, rules: [{ required: true, message: "O nome é obrigatório!" }] },
-    { name: "idade", label: "Idade", span: 24, rules: [{ required: true, message: "A idade é obrigatória!" }] },
-    { name: "email", label: "Email", span: 24, rules: [{ type: "email ", message: "O email é inválido!" }] },
+    { name: "nome", label: "Nome", rules: [{ required: true, message: "O nome é obrigatório!" }] },
+    { name: "idade", label: "Idade", tipo: "number", rules: [{ required: true, message: "A idade é obrigatória!" }] },
+    { name: "email", label: "Email", rules: [{ type: "email ", message: "O email é inválido!" }] },
   ];
 
   return (
@@ -100,6 +111,7 @@ const Cliente = () => {
         campos={CAMPOS}
         mostrarModal={mostrarModal}
         fecharModal={fecharModal}
+        aoFinalizar={aoSalvarCliente}
       />
     </>
   );

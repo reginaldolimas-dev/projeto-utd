@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Row } from "antd";
+import { Button, Col, Form, Input, InputNumber, Row } from "antd";
 const Formulario = ({ aoEnviar, aoRedefinir, campos = [], botaoEnviar = {}, botaoLimpar = {} }) => {
   const [form] = Form.useForm();
 
@@ -35,7 +35,20 @@ const Formulario = ({ aoEnviar, aoRedefinir, campos = [], botaoEnviar = {}, bota
         <Row>
           <Col key={campo.name} span={24}>
             <Form.Item key={campo.name} label={campo.label} name={campo.name} rules={campo.rules}>
-              <Input />
+              {campo.tipo === "number" ? (
+                <InputNumber
+                  min={0}
+                  onKeyPress={(e) => {
+                    if (!/[0-9]/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                  precision={0}
+                  style={{ width: "100%" }}
+                />
+              ) : (
+                <Input />
+              )}
             </Form.Item>
           </Col>
         </Row>
