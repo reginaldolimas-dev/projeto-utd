@@ -1,9 +1,22 @@
 import { Button, Card, Col, Collapse, Row, Typography } from "antd";
+import { useEffect } from "react";
+import { buscarClientes } from "../Api/rotas-cliente";
 import Formulario from "../Formulario/Formulario";
 import Tabela from "../Tabela/Tabela";
 
 const Cliente = () => {
   const { Title } = Typography;
+
+  useEffect(() => {
+    buscarTodosClientes();
+  }, []);
+
+  async function buscarTodosClientes() {
+    const resposta = await buscarClientes();
+    console.log("🚀 ~ buscarTodosClientes ~ resposta:", resposta);
+
+    return resposta.data;
+  }
 
   const campos = [{ name: "nome", label: "Nome" }];
 
