@@ -1,6 +1,10 @@
 import { Button, Col, Form, Input, Row } from "antd";
-const Formulario = ({ aoEnviar, aoRedefinir, campos = [] }) => {
+const Formulario = ({ aoEnviar, aoRedefinir, campos = [], botaoEnviar = {}, botaoLimpar = {} }) => {
   const [form] = Form.useForm();
+
+  const { type: tipoEnviar = "primary", texto: textoEnviar = "Pesquisar" } = botaoEnviar;
+
+  const { type: tipoCancelar = "primary", texto: textoCancelar = "Redefinir" } = botaoLimpar;
 
   const onSubmit = async () => {
     try {
@@ -27,24 +31,24 @@ const Formulario = ({ aoEnviar, aoRedefinir, campos = [] }) => {
       wrapperCol={{ flex: 1 }}
       colon={false}
     >
-      <Row>
-        {campos.map((campo) => (
-          <Col key={campo.name} span={6}>
+      {campos.map((campo) => (
+        <Row>
+          <Col key={campo.name} span={24}>
             <Form.Item key={campo.name} label={campo.label} name={campo.name} rules={campo.rules}>
               <Input />
             </Form.Item>
           </Col>
-        ))}
-      </Row>
+        </Row>
+      ))}
       <Row justify="space-between">
         <Col>
-          <Button type="primary" danger ghost onClick={onReset}>
-            Redefinir
+          <Button type={tipoCancelar} danger ghost onClick={onReset}>
+            {textoCancelar}
           </Button>
         </Col>
         <Col>
-          <Button type="primary" ghost htmlType="submit" onClick={onSubmit}>
-            Pesquisar
+          <Button ghost htmlType="submit" type={tipoEnviar} onClick={onSubmit}>
+            {textoEnviar}
           </Button>
         </Col>
       </Row>

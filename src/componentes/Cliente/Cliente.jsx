@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import { buscarClientes } from "../Api/rotas-cliente";
 import Formulario from "../Formulario/Formulario";
 import Tabela from "../Tabela/Tabela";
+import ClienteModal from "./componente/ClienteModal";
 
 const Cliente = () => {
   const [clientes, definirClientes] = useState([]);
+  const [mostrarModal, definirMostrarModal] = useState(false);
 
   const { Title } = Typography;
 
@@ -19,6 +21,13 @@ const Cliente = () => {
       definirClientes(resposta.data);
     }
   }
+
+  const abrirModal = () => {
+    definirMostrarModal(true);
+  };
+  const fecharModal = () => {
+    definirMostrarModal(false);
+  };
 
   const aoEnviar = (valores) => {
     if (valores?.nome) {
@@ -55,9 +64,22 @@ const Cliente = () => {
     },
   ];
 
+  const CAMPOS = [
+    { name: "nome", label: "Nome", span: 24, rules: [{ required: true, message: "O nome é obrigatório!" }] },
+    { name: "idade", label: "Idade", span: 24, rules: [{ required: true, message: "A idade é obrigatória!" }] },
+    { name: "email", label: "Email", span: 24, rules: [{ type: "email ", message: "O email é inválido!" }] },
+  ];
+
   return (
     <>
-      <Card title={<Title level={3}>PESQUISA DE CLIENTES</Title>} extra={<Button type="primary">Cadastrar</Button>}>
+      <Card
+        title={<Title level={3}>PESQUISA DE CLIENTES</Title>}
+        extra={
+          <Button type="primary" onClick={() => abrirModal()}>
+            Cadastrar
+          </Button>
+        }
+      >
         <Collapse defaultActiveKey={"0"}>
           <Collapse.Panel header={"Filtros"} key={"0"}>
             <Row gutter={[32, 32]}>
@@ -73,6 +95,12 @@ const Cliente = () => {
           </Col>
         </Row>
       </Card>
+      <ClienteModal
+        titulo={"Cadastro de Cliente"}
+        campos={CAMPOS}
+        mostrarModal={mostrarModal}
+        fecharModal={fecharModal}
+      />
     </>
   );
 };
