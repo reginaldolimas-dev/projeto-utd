@@ -1,14 +1,31 @@
 import { Button, Col, Form, Input, InputNumber, Row } from "antd";
-const Formulario = ({ aoEnviar, aoRedefinir, campos = [], botaoEnviar = {}, botaoLimpar = {} }) => {
+const Formulario = ({
+  aoEnviar,
+  aoRedefinir,
+  campos = [],
+  botaoEnviar = {},
+  botaoLimpar = {},
+  valoresIniciais = {},
+}) => {
   const [form] = Form.useForm();
 
   const { type: tipoEnviar = "primary", texto: textoEnviar = "Pesquisar" } = botaoEnviar;
 
   const { type: tipoCancelar = "primary", texto: textoCancelar = "Redefinir" } = botaoLimpar;
 
+  const pegarValorInicial = (campo) => {
+    return valoresIniciais?.[campo.name];
+  };
+
+  const adicionarPropriedades = (campo) => {
+    return {
+      initialValue: pegarValorInicial(campo),
+      rules: campo.rules || [],
+    };
+  };
+
   const onSubmit = async (e) => {
     e?.preventDefault();
-    e?.stopPropagation();
     try {
       const valores = await form.validateFields();
       await aoEnviar?.(valores);
@@ -36,7 +53,7 @@ const Formulario = ({ aoEnviar, aoRedefinir, campos = [], botaoEnviar = {}, bota
       {campos.map((campo) => (
         <Row>
           <Col key={campo.name} span={24}>
-            <Form.Item key={campo.name} label={campo.label} name={campo.name} rules={campo.rules}>
+            <Form.Item key={campo.name} label={campo.label} name={campo.name} {...adicionarPropriedades(campo)}>
               {campo.tipo === "number" ? (
                 <InputNumber
                   min={0}

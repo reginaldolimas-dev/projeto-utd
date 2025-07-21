@@ -9,7 +9,7 @@ import ClienteModal from "./componente/ClienteModal";
 const Cliente = () => {
   const [clientes, definirClientes] = useState([]);
   const [mostrarModal, definirMostrarModal] = useState(false);
-
+  const [registro, definirRegistro] = useState({});
   const { Title } = Typography;
 
   useEffect(() => {
@@ -25,7 +25,6 @@ const Cliente = () => {
 
   async function aoSalvarCliente(parametros) {
     const resposta = await salvarCliente(parametros);
-    console.log("🚀 ~ aoSalvarCliente ~ resposta:", resposta);
     if (resposta?.status === 200) {
       notification.success({
         message: "Cliente salvo com sucesso!",
@@ -51,6 +50,7 @@ const Cliente = () => {
   };
   const fecharModal = () => {
     definirMostrarModal(false);
+    definirRegistro({});
   };
 
   const aoEnviar = (valores) => {
@@ -66,7 +66,7 @@ const Cliente = () => {
     buscarTodosClientes();
   };
 
-  function confirmar(registro) {
+  function confirmarExclusao(registro) {
     Modal.confirm({
       title: `Olá, tem certeza disso?`,
       content: <>{`Continuar com a operação?`}</>,
@@ -76,6 +76,13 @@ const Cliente = () => {
       },
     });
   }
+
+  function confirmarEdicao(registro) {
+    definirRegistro(registro);
+    abrirModal();
+  }
+
+  console.log("registro:", registro);
 
   const campos = [{ name: "nome", label: "Nome" }];
 
@@ -88,10 +95,10 @@ const Cliente = () => {
       key: "acoes",
       render: (registro) => (
         <>
-          <Button type="primary" onClick={() => console.log(registro)}>
+          <Button type="primary" onClick={() => confirmarEdicao(registro)}>
             Editar
           </Button>
-          <Button type="primary" danger style={{ marginLeft: 8 }} onClick={() => confirmar(registro)}>
+          <Button type="primary" danger style={{ marginLeft: 8 }} onClick={() => confirmarExclusao(registro)}>
             Excluir
           </Button>
         </>
@@ -137,6 +144,7 @@ const Cliente = () => {
         fecharModal={fecharModal}
         aoFinalizar={aoSalvarCliente}
         onOk={buscarTodosClientes}
+        registro={registro}
       />
     </>
   );
