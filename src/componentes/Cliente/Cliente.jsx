@@ -1,7 +1,8 @@
-import { Button, Card, Col, Collapse, Modal, Row, Typography } from "antd";
+import { Button, Card, Col, Collapse, Modal, notification, Row, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { buscarClientes, deletarCliente, salvarCliente } from "../Api/rotas-cliente";
 import Formulario from "../Formulario/Formulario";
+
 import Tabela from "../Tabela/Tabela";
 import ClienteModal from "./componente/ClienteModal";
 
@@ -24,23 +25,25 @@ const Cliente = () => {
 
   async function aoSalvarCliente(parametros) {
     const resposta = await salvarCliente(parametros);
-    if (resposta?.request?.status === 200) {
-      Notification.success({
+    console.log("🚀 ~ aoSalvarCliente ~ resposta:", resposta);
+    if (resposta?.status === 200) {
+      notification.success({
         message: "Cliente salvo com sucesso!",
       });
+      await buscarTodosClientes();
     }
-    await buscarTodosClientes();
     fecharModal();
   }
 
   async function aoExcluirCliente(registro) {
     const resposta = await deletarCliente(registro);
-    if (resposta?.request?.status === 200) {
-      Notification.success({
+    if (resposta?.status === 200) {
+      notification.success({
         message: "Cliente excluído com sucesso!",
       });
+      await buscarTodosClientes();
     }
-    await buscarTodosClientes();
+    fecharModal();
   }
 
   const abrirModal = () => {

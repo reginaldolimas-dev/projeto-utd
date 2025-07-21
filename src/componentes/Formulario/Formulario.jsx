@@ -6,10 +6,12 @@ const Formulario = ({ aoEnviar, aoRedefinir, campos = [], botaoEnviar = {}, bota
 
   const { type: tipoCancelar = "primary", texto: textoCancelar = "Redefinir" } = botaoLimpar;
 
-  const onSubmit = async () => {
+  const onSubmit = async (e) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     try {
       const valores = await form.validateFields();
-      aoEnviar?.(valores);
+      await aoEnviar?.(valores);
       form.resetFields();
     } catch (error) {
       console.error("Erro ao enviar o formulário:", error);
