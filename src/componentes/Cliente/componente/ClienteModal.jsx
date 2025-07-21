@@ -1,14 +1,14 @@
 import { Modal } from "antd";
 import Formulario from "../../Formulario/Formulario";
 
-const ClienteModal = ({ mostrarModal, fecharModal, aoFinalizar, registro, campos, titulo }) => {
+const ClienteModal = ({ mostrarModal, fecharModal, aoFinalizar, registro, campos, titulo, onOk, ...props }) => {
   async function prepararEnvio(parametros) {
     aoFinalizar(parametros);
     fecharModal();
   }
 
   return (
-    <Modal onCancel={fecharModal} visible={mostrarModal} title={titulo} footer={null}>
+    <Modal onOk={onOk} onCancel={fecharModal} visible={mostrarModal} title={titulo} footer={null} {...props}>
       <Formulario
         botaoEnviar={{ texto: "Salvar" }}
         botaoLimpar={{ texto: "Cancelar" }}

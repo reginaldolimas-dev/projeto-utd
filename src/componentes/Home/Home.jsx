@@ -16,7 +16,7 @@ export function Home() {
                 <strong>📦 Backend:</strong> Node.js, Express, Sequelize, MySQL
               </div>
               <div>
-                <strong>⚛️ Frontend:</strong> React, Vite, React Router, Axios, React Icons
+                <strong>⚛️ Frontend:</strong> React, Vite, React Router, Axios, React Icons, Ant Design
               </div>
               <div>
                 <strong>📂 Estrutura:</strong> Páginas modulares, organização com pastas <code>pages</code> e{" "}

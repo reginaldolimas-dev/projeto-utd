@@ -1,6 +1,6 @@
-import { Button, Card, Col, Collapse, Row, Typography } from "antd";
+import { Button, Card, Col, Collapse, Modal, Row, Typography } from "antd";
 import { useEffect, useState } from "react";
-import { buscarClientes, salvarCliente } from "../Api/rotas-cliente";
+import { buscarClientes, deletarCliente, salvarCliente } from "../Api/rotas-cliente";
 import Formulario from "../Formulario/Formulario";
 import Tabela from "../Tabela/Tabela";
 import ClienteModal from "./componente/ClienteModal";
@@ -33,6 +33,16 @@ const Cliente = () => {
     fecharModal();
   }
 
+  async function aoExcluirCliente(registro) {
+    const resposta = await deletarCliente(registro);
+    if (resposta?.request?.status === 200) {
+      Notification.success({
+        message: "Cliente excluído com sucesso!",
+      });
+    }
+    await buscarTodosClientes();
+  }
+
   const abrirModal = () => {
     definirMostrarModal(true);
   };
@@ -53,6 +63,17 @@ const Cliente = () => {
     buscarTodosClientes();
   };
 
+  function confirmar(registro) {
+    Modal.confirm({
+      title: `Olá, tem certeza disso?`,
+      content: <>{`Continuar com a operação?`}</>,
+      onOk() {
+        aoExcluirCliente(registro);
+        Modal.destroyAll();
+      },
+    });
+  }
+
   const campos = [{ name: "nome", label: "Nome" }];
 
   const colunas = [
@@ -67,7 +88,7 @@ const Cliente = () => {
           <Button type="primary" onClick={() => console.log(registro)}>
             Editar
           </Button>
-          <Button type="primary" danger style={{ marginLeft: 8 }} onClick={() => console.log(registro)}>
+          <Button type="primary" danger style={{ marginLeft: 8 }} onClick={() => confirmar(registro)}>
             Excluir
           </Button>
         </>
@@ -112,6 +133,7 @@ const Cliente = () => {
         mostrarModal={mostrarModal}
         fecharModal={fecharModal}
         aoFinalizar={aoSalvarCliente}
+        onOk={buscarTodosClientes}
       />
     </>
   );
