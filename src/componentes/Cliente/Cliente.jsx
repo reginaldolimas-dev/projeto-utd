@@ -1,6 +1,6 @@
 import { Button, Card, Col, Collapse, Modal, notification, Row, Typography } from "antd";
 import { useEffect, useState } from "react";
-import { buscarClientes, deletarCliente, salvarCliente } from "../Api/rotas-cliente";
+import { buscarClientes, deletarCliente, editarCliente, salvarCliente } from "../Api/rotas-cliente";
 import Formulario from "../Formulario/Formulario";
 
 import Tabela from "../Tabela/Tabela";
@@ -45,6 +45,17 @@ const Cliente = () => {
     fecharModal();
   }
 
+  async function aoEditarCliente(parametros) {
+    const resposta = await editarCliente(parametros);
+    if (resposta?.status === 200) {
+      notification.success({
+        message: "Cliente editado com sucesso!",
+      });
+      await buscarTodosClientes();
+    }
+    fecharModal();
+  }
+
   const abrirModal = () => {
     definirMostrarModal(true);
   };
@@ -77,8 +88,8 @@ const Cliente = () => {
     });
   }
 
-  function confirmarEdicao(registro) {
-    definirRegistro(registro);
+  function abrirModalEdicao(registro) {
+    definirRegistro((prev) => ({ ...prev, ...registro }));
     abrirModal();
   }
 
@@ -95,7 +106,7 @@ const Cliente = () => {
       key: "acoes",
       render: (registro) => (
         <>
-          <Button type="primary" onClick={() => confirmarEdicao(registro)}>
+          <Button type="primary" onClick={() => abrirModalEdicao(registro)}>
             Editar
           </Button>
           <Button type="primary" danger style={{ marginLeft: 8 }} onClick={() => confirmarExclusao(registro)}>
@@ -142,7 +153,7 @@ const Cliente = () => {
         campos={CAMPOS}
         mostrarModal={mostrarModal}
         fecharModal={fecharModal}
-        aoFinalizar={aoSalvarCliente}
+        aoFinalizar={registro.id ? aoEditarCliente : aoSalvarCliente}
         onOk={buscarTodosClientes}
         registro={registro}
       />

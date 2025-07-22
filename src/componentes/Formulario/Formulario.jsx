@@ -1,4 +1,5 @@
 import { Button, Col, Form, Input, InputNumber, Row } from "antd";
+import { useEffect } from "react";
 const Formulario = ({
   aoEnviar,
   aoRedefinir,
@@ -23,6 +24,16 @@ const Formulario = ({
       rules: campo.rules || [],
     };
   };
+
+  useEffect(() => {
+    if (valoresIniciais) {
+      const novosValores = {};
+      campos.forEach((campo) => {
+        novosValores[campo.name] = pegarValorInicial(campo);
+      });
+      form.setFieldsValue(novosValores);
+    }
+  }, [valoresIniciais, form, campos]);
 
   const onSubmit = async (e) => {
     e?.preventDefault();
