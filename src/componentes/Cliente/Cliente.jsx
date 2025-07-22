@@ -46,7 +46,8 @@ const Cliente = () => {
   }
 
   async function aoEditarCliente(parametros) {
-    const resposta = await editarCliente(parametros);
+    const parametrosComId = { ...parametros, id: registro.id };
+    const resposta = await editarCliente(parametrosComId);
     if (resposta?.status === 200) {
       notification.success({
         message: "Cliente editado com sucesso!",
