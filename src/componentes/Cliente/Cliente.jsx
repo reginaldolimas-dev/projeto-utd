@@ -1,4 +1,4 @@
-import { Button, Card, Col, Collapse, Modal, notification, Row, Typography } from "antd";
+import { Button, Card, Col, Collapse, Modal, notification, Row, Spin, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { buscarClientes, deletarCliente, editarCliente, salvarCliente } from "../Api/rotas-cliente";
 import Formulario from "../Formulario/Formulario";
@@ -10,6 +10,7 @@ const Cliente = () => {
   const [clientes, definirClientes] = useState([]);
   const [mostrarModal, definirMostrarModal] = useState(false);
   const [registro, definirRegistro] = useState({});
+  const [carregando, definirCarregando] = useState(false);
   const { Title } = Typography;
 
   useEffect(() => {
@@ -17,14 +18,18 @@ const Cliente = () => {
   }, []);
 
   async function buscarTodosClientes() {
+    definirCarregando(true);
     const resposta = await buscarClientes();
+    definirCarregando(false);
     if (resposta?.request?.status === 200) {
       definirClientes(resposta.data);
     }
   }
 
   async function aoSalvarCliente(parametros) {
+    definirCarregando(true);
     const resposta = await salvarCliente(parametros);
+    definirCarregando(false);
     if (resposta?.status === 200) {
       notification.success({
         message: "Cliente salvo com sucesso!",
@@ -35,7 +40,9 @@ const Cliente = () => {
   }
 
   async function aoExcluirCliente(registro) {
+    definirCarregando(true);
     const resposta = await deletarCliente(registro);
+    definirCarregando(false);
     if (resposta?.status === 200) {
       notification.success({
         message: "Cliente excluído com sucesso!",
@@ -47,7 +54,9 @@ const Cliente = () => {
 
   async function aoEditarCliente(parametros) {
     const parametrosComId = { ...parametros, id: registro.id };
+    definirCarregando(true);
     const resposta = await editarCliente(parametrosComId);
+    definirCarregando(false);
     if (resposta?.status === 200) {
       notification.success({
         message: "Cliente editado com sucesso!",
@@ -125,7 +134,7 @@ const Cliente = () => {
   ];
 
   return (
-    <>
+    <Spin spinning={carregando}>
       <Card
         title={<Title level={3}>PESQUISA DE CLIENTES</Title>}
         extra={
@@ -158,7 +167,7 @@ const Cliente = () => {
         onOk={buscarTodosClientes}
         registro={registro}
       />
-    </>
+    </Spin>
   );
 };
 
