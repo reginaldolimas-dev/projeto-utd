@@ -13,10 +13,26 @@ export function Home() {
           subTitle={
             <div style={{ textAlign: "left", fontSize: "18px" }}>
               <div>
-                <strong>📦 Backend:</strong> Node.js, Express, Sequelize, MySQL
+                <strong>📦 Backend:</strong> Node.js, Express, Sequelize, MySQL -
+                <a
+                  href="https://github.com/reginaldolimas-dev/projeto-utd-back"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ marginLeft: "4px" }}
+                >
+                  Repositório GitHub
+                </a>
               </div>
               <div>
-                <strong>⚛️ Frontend:</strong> React, Vite, React Router, Axios, React Icons, Ant Design
+                <strong>⚛️ Frontend:</strong> React, Vite, React Router, Axios, React Icons, Ant Design -
+                <a
+                  href="https://github.com/reginaldolimas-dev/projeto-utd"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ marginLeft: "4px" }}
+                >
+                  Repositório GitHub
+                </a>
               </div>
               <div>
                 <strong>📂 Estrutura:</strong> Páginas modulares, organização com pastas <code>pages</code> e{" "}
