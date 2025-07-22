@@ -130,7 +130,7 @@ const Cliente = () => {
   const CAMPOS = [
     { name: "nome", label: "Nome", rules: [{ required: true, message: "O nome é obrigatório!" }] },
     { name: "idade", label: "Idade", tipo: "number", rules: [{ required: true, message: "A idade é obrigatória!" }] },
-    { name: "email", label: "Email", rules: [{ type: "email ", message: "O email é inválido!" }] },
+    { name: "email", label: "Email", rules: [{ type: "email", message: "O email é inválido!" }] },
   ];
 
   return (
